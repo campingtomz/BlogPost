@@ -17,7 +17,8 @@ namespace blog.Controllers
         // GET: BlogPosts
         public ActionResult Index()
         {
-            return View(db.Posts.ToList());
+
+            return View(db.BlogPosts.ToList());
         }
 
         // GET: BlogPosts/Details/5
@@ -27,7 +28,7 @@ namespace blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPost blogPost = db.Posts.Find(id);
+            BlogPost blogPost = db.BlogPosts.Find(id);
             if (blogPost == null)
             {
                 return HttpNotFound();
@@ -50,7 +51,8 @@ namespace blog.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Posts.Add(blogPost);
+                blogPost.Created = DateTime.Now;
+                db.BlogPosts.Add(blogPost);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -65,7 +67,7 @@ namespace blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPost blogPost = db.Posts.Find(id);
+            BlogPost blogPost = db.BlogPosts.Find(id);
             if (blogPost == null)
             {
                 return HttpNotFound();
@@ -82,6 +84,7 @@ namespace blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                blogPost.Updated = DateTime.Now;
                 db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -96,7 +99,7 @@ namespace blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPost blogPost = db.Posts.Find(id);
+            BlogPost blogPost = db.BlogPosts.Find(id);
             if (blogPost == null)
             {
                 return HttpNotFound();
@@ -109,8 +112,8 @@ namespace blog.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            BlogPost blogPost = db.Posts.Find(id);
-            db.Posts.Remove(blogPost);
+            BlogPost blogPost = db.BlogPosts.Find(id);
+            db.BlogPosts.Remove(blogPost);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
