@@ -18,7 +18,7 @@ namespace blog.Controllers
         public ActionResult Index()
         {
 
-            return View(db.BlogPosts.ToList());
+            return View();
         }
 
         // GET: BlogPosts/Details/5
@@ -47,7 +47,7 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Created,Updated,Title,Slug,Body,MediaURL,Published")] BlogPost blogPost)
+        public ActionResult Create([Bind(Include = "Title,Body,MediaURL,Published")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Updated,Title,Slug,Body,MediaURL,Published")] BlogPost blogPost)
+        public ActionResult Edit([Bind(Include = "Id,Created,Title,Body,Published")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
