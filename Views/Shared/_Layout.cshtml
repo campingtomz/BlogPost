@@ -5,31 +5,19 @@
     <title>This is the Way!</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
     <link href="https://fonts.googleapis.com/css?family=B612+Mono|Cabin:400,700&display=swap" rel="stylesheet">
-
     @*<link rel="stylesheet" href="fonts/icomoon/style.css">*@
-
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link rel="stylesheet" href="~/Content/jquery-ui.css">
     <link rel="stylesheet" href="~/Content/owl.carousel.min.css">
     <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
-
     <link rel="stylesheet" href="~/Content/jquery.fancybox.min.css">
-
     <link rel="stylesheet" href="~/Content/bootstrap-datepicker.css">
-
     @*<link rel="stylesheet" href="fonts/flaticon/font/flaticon.css">*@
-
     <link rel="stylesheet" href="~/Content/aos.css">
     <link href="~/Content/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
-
     <link rel="stylesheet" href="~/Content/style.css">
- 
-
-
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -62,16 +50,20 @@
                     </div>
                     <div class="col-12 col-lg-6 ml-auto d-flex">
                         @*<div class="ml-md-auto top-social d-none d-lg-inline-block">
-                                <a href="#" class="d-inline-block p-3"><span class="icon-facebook"></span></a>
-                                <a href="#" class="d-inline-block p-3"><span class="icon-twitter"></span></a>
-                                <a href="#" class="d-inline-block p-3"><span class="icon-instagram"></span></a>
-                            </div>*@
+            <a href="#" class="d-inline-block p-3"><span class="icon-facebook"></span></a>
+            <a href="#" class="d-inline-block p-3"><span class="icon-twitter"></span></a>
+            <a href="#" class="d-inline-block p-3"><span class="icon-instagram"></span></a>
+        </div>*@
                         <form action="#" class="search-form d-inline-block">
 
                             <div class="d-flex">
                                 <input type="email" class="form-control" placeholder="Search...">
                                 <button type="submit" class="btn btn-secondary"><span class="icon-search"></span></button>
                             </div>
+                        </form>
+                        <form action="#" class=" d-inline-block">
+                            @Html.Partial("_LoginPartial")
+
                         </form>
 
                     </div>
@@ -116,8 +108,9 @@
             </div>
 
         </div>
-
+       
         @RenderBody()
+
         <div class="footer">
             <div class="container">
 
@@ -171,49 +164,3 @@
 </html>
 
 
-
-
-@*<!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>@ViewBag.Title - My ASP.NET Application</title>
-        @Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")
-
-    </head>
-    <body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                    @Html.Partial("_LoginPartial")
-                </div>
-            </div>
-        </div>
-        <div class="container body-content">
-            @RenderBody()
-            <hr />
-            <footer>
-                <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-            </footer>
-        </div>
-
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
-    </body>
-    </html>*@

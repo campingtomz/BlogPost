@@ -12,8 +12,9 @@
                     <div class="img-bg" style="background-image: url('images/big_img_1.jpg')"></div>
                     <div class="contents">
                         <span class="caption">Editor's Pick</span>
-                        <h2><a href=@Url.Action("Details","BlogPosts", new { id = blogPost.Id })>@blogPost.Title</a></h2>
-                        <p class="mb-3">@blogPost.Body</p>
+                        
+                        <h2><a href=@Url.Action("Details", "BlogPosts", new { slug = blogPost.Slug })>@blogPost.Title</a></h2>
+                        <p class="mb-3">@Html.Raw(blogPost.Body)</p>
 
                         <div class="post-meta">
                             <span class="d-block"><a href="#">Thomas Zanis</a> in <a href="#">C#</a></span>

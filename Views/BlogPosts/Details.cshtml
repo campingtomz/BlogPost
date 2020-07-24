@@ -2,19 +2,17 @@
 @{
     ViewBag.Title = "Details";
 }
-
-<h2>Details</h2>
-<div class="container">
-
     <div class="site-section">
         <div class="container">
+            <h2>Details</h2>
             <div class="row">
                 <div class="col-lg-8 single-content">
 
                     <p class="mb-5">
                         <img src="images/big_img_1.jpg" alt="Image" class="img-fluid">
                     </p>
-                    <h1 class="mb-4">@Model.Title           
+                    <h1 class="mb-4">
+                        @Model.Title
                     </h1>
                     <div class="post-meta d-flex mb-5">
                         <div class="bio-pic mr-3">
@@ -24,85 +22,102 @@
                             <span class="d-block"><a href="#">Thomas Zanis</a> in <a href="#">News</a></span>
                             <span class="date-read">@Model.Created.ToString("MMM dd yyyy") <span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
                         </div>
-                        <p>@Model.Body</p>
+                        <p>@Html.Raw(Model.Body)</p>
                     </div>
+
+
+                    <div class="comment-form-wrap pt-5">
+                        <div class="section-title">
+                            <h2 class="mb-5">Leave a comment</h2>
+                        </div>
+                        <form action="#" class="p-5 bg-light">
+                            <div class="form-group">
+                                <label for="name">Name *</label>
+                                <input type="text" class="form-control" id="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="website">Website</label>
+                                <input type="url" class="form-control" id="website">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Message</label>
+                                <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Post Comment" class="btn btn-primary py-3">
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 ml-auto">
+                    <div class="section-title">
+                        <h2>Popular Posts</h2>
+                    </div>
+
+                    <div class="trend-entry d-flex">
+                        <div class="number align-self-start">01</div>
+                        <div class="trend-contents">
+                            <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
+                            <div class="post-meta">
+                                <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
+                                <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trend-entry d-flex">
+                        <div class="number align-self-start">02</div>
+                        <div class="trend-contents">
+                            <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
+                            <div class="post-meta">
+                                <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
+                                <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trend-entry d-flex">
+                        <div class="number align-self-start">03</div>
+                        <div class="trend-contents">
+                            <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
+                            <div class="post-meta">
+                                <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
+                                <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="trend-entry d-flex pl-0">
+                        <div class="number align-self-start">04</div>
+                        <div class="trend-contents">
+                            <h2><a href="blog-single.html">News Needs to Meet Its Audiences Where They Are</a></h2>
+                            <div class="post-meta">
+                                <span class="d-block"><a href="#">Dave Rogers</a> in <a href="#">News</a></span>
+                                <span class="date-read">Jun 14 <span class="mx-1">&bullet;</span> 3 min read <span class="icon-star2"></span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                        <a href="#" class="more">See All Popular <span class="icon-keyboard_arrow_right"></span></a>
+                    </p>
                 </div>
             </div>
         </div>
+
+
+        <div class="container">
+            <p>
+                @Html.ActionLink("Home", "Index", "Home") |
+                @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+                @Html.ActionLink("Back to List", "Index")
+            </p>
+        </div>
     </div>
-    </div>
-
-
-
-
-
-
-
-    @*<div>
-            <h4>BlogPost</h4>
-            <hr />
-
-            <dl class="dl-horizontal">
-                <dt>
-                    @Html.DisplayNameFor(model => model.Created)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Created)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Updated)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Updated)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Title)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Title)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Slug)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Slug)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Body)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Body)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.MediaURL)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.MediaURL)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Published)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Published)
-                </dd>
-
-            </dl>
-        </div>*@
-    <@*p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-        @Html.ActionLink("Back to List", "Index")
-    </p>
-</div>*@

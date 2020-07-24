@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using blog.Helpers;
 using blog.Models;
 
 namespace blog.Controllers
@@ -19,25 +20,25 @@ namespace blog.Controllers
         {
             var allBlogPosts = db.BlogPosts.ToList();
             return View(allBlogPosts);
-       
+
         }
 
         // GET: BlogPosts/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(string Slug)
         {
-            if (id == null)
+            if (String.IsNullOrWhiteSpace(Slug))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPost blogPost = db.BlogPosts.Find(id);
+            BlogPost blogPost = db.BlogPosts.FirstOrDefault(p => p.Slug == Slug);
             if (blogPost == null)
             {
                 return HttpNotFound();
             }
             return View(blogPost);
         }
-
         // GET: BlogPosts/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             return View();
@@ -48,11 +49,23 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult Create([Bind(Include = "Title, Updated, Body,MediaURL,Published")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
-
+                var Slug = StringUtilities.URLFriendly(blogPost.Title);
+                if (String.IsNullOrWhiteSpace(Slug))
+                {
+                    ModelState.AddModelError("Title", "Invalid title");
+                    return View(blogPost);
+                }
+                if (db.BlogPosts.Any(p => p.Slug == Slug))
+                {
+                    ModelState.AddModelError("Title", "The title must be unique");
+                    return View(blogPost);
+                }
+                blogPost.Slug = Slug;
                 blogPost.Created = DateTime.Now;
                 db.BlogPosts.Add(blogPost);
                 db.SaveChanges();
@@ -86,6 +99,22 @@ namespace blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                var Slug = StringUtilities.URLFriendly(blogPost.Title);
+                if (Slug != blogPost.Slug)
+                {
+                    if (String.IsNullOrWhiteSpace(Slug))
+                    {
+                        ModelState.AddModelError("Title", "Invalid title");
+                        return View(blogPost);
+                    }
+                    if (db.BlogPosts.Any(p => p.Slug == Slug))
+                    {
+                        ModelState.AddModelError("Title", "The title must be unique");
+                        return View(blogPost);
+                    }
+                    blogPost.Slug = Slug;
+                }
+                
                 blogPost.Updated = DateTime.Now;
                 db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
