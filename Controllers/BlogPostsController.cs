@@ -17,8 +17,9 @@ namespace blog.Controllers
         // GET: BlogPosts
         public ActionResult Index()
         {
-
-            return View();
+            var allBlogPosts = db.BlogPosts.ToList();
+            return View(allBlogPosts);
+       
         }
 
         // GET: BlogPosts/Details/5
@@ -47,10 +48,11 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Title,Body,MediaURL,Published")] BlogPost blogPost)
+        public ActionResult Create([Bind(Include = "Title, Updated, Body,MediaURL,Published")] BlogPost blogPost)
         {
             if (ModelState.IsValid)
             {
+
                 blogPost.Created = DateTime.Now;
                 db.BlogPosts.Add(blogPost);
                 db.SaveChanges();

@@ -12,13 +12,13 @@ namespace blog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var allBlogPosts = db.BlogPosts.Where(b=> b.Published == true).ToList();
+            var allBlogPosts = db.BlogPosts.Where(b => b.Published).ToList();//Where(b=> b.Published).
             return View(allBlogPosts);
         }
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "this is a test";
 
             return View();
         }

@@ -211,6 +211,7 @@
     <Content Include="Content\.DS_Store" />
     <Content Include="Content\bootstrap.min.css.map" />
     <Content Include="Content\bootstrap\bootstrap.min.css.map" />
+    <Content Include="libman.json" />
     <None Include="Scripts\default\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\default\jquery-3.4.1.js" />
     <Content Include="Scripts\default\jquery-3.4.1.min.js" />
@@ -285,6 +286,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Helpers\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
