@@ -4,10 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.IO;
 using System.Web;
 using System.Web.Mvc;
 using blog.Helpers;
 using blog.Models;
+using blog.ViewModels;
 
 namespace blog.Controllers
 {
@@ -26,17 +28,21 @@ namespace blog.Controllers
         // GET: BlogPosts/Details/5
         public ActionResult Details(string Slug)
         {
+            var model = new BlogPostDetailsVM();
             if (String.IsNullOrWhiteSpace(Slug))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BlogPost blogPost = db.BlogPosts.FirstOrDefault(p => p.Slug == Slug);
-            if (blogPost == null)
+            model.BlogPost = db.BlogPosts.FirstOrDefault(p => p.Slug == Slug);
+            if (model.BlogPost == null)
             {
                 return HttpNotFound();
             }
-            return View(blogPost);
+            model.SidePosts = db.BlogPosts.ToList();
+            return View(model);
         }
+
+
         // GET: BlogPosts/Create
         [Authorize(Roles = "Admin")]
         public ActionResult Create()
@@ -50,10 +56,11 @@ namespace blog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "Title, Updated, Body,MediaURL,Published")] BlogPost blogPost)
+        public ActionResult Create([Bind(Include = "Title, Updated, Body, Abstract, Categories, Published")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
+               
                 var Slug = StringUtilities.URLFriendly(blogPost.Title);
                 if (String.IsNullOrWhiteSpace(Slug))
                 {
@@ -64,6 +71,16 @@ namespace blog.Controllers
                 {
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
+                }
+
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    var justFileName = Path.GetFileNameWithoutExtension(fileName);
+                    justFileName = StringUtilities.URLFriendly(justFileName);
+                    fileName = $"{justFileName}_{DateTime.Now.Ticks}{Path.GetExtension(fileName)}";
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blogPost.MediaURL = "/Uploads/" + fileName;
                 }
                 blogPost.Slug = Slug;
                 blogPost.Created = DateTime.Now;
@@ -76,6 +93,7 @@ namespace blog.Controllers
         }
 
         // GET: BlogPosts/Edit/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,7 +113,8 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Created,Title,Body,Published")] BlogPost blogPost)
+        [Authorize(Roles = "Admin")]
+        public ActionResult Edit([Bind(Include = "Id,Created,Title,Body, Abstract,Categories,MediaURL,Published, Slug")] BlogPost blogPost, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {
@@ -114,7 +133,14 @@ namespace blog.Controllers
                     }
                     blogPost.Slug = Slug;
                 }
-                
+
+                if (ImageUploadValidator.IsWebFriendlyImage(image))
+                {
+                    var fileName = Path.GetFileName(image.FileName);
+                    image.SaveAs(Path.Combine(Server.MapPath("~/Uploads/"), fileName));
+                    blogPost.MediaURL = "/Uploads/" + fileName;
+                }
+
                 blogPost.Updated = DateTime.Now;
                 db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
@@ -124,6 +150,7 @@ namespace blog.Controllers
         }
 
         // GET: BlogPosts/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -139,6 +166,7 @@ namespace blog.Controllers
         }
 
         // POST: BlogPosts/Delete/5
+        [Authorize(Roles = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

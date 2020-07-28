@@ -26,11 +26,17 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Title)
                 </th>
-                <th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.Slug)
-                </th>
+                </th>*@
                 <th>
+                    @Html.DisplayNameFor(model => model.Abstract)
+                </th>
+                @*<th>
                     @Html.DisplayNameFor(model => model.Body)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.Categories)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.MediaURL)
@@ -45,37 +51,47 @@
     @foreach (var item in Model)
     {
        
-            <tr>
-                <td>
-                    @item.Created.ToString("dddd, dd MMMM yyyy")
-                </td>
-                <td>
-                
-                    @Html.DisplayFor(modelItem => item.Updated)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Title)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Slug)
-                </td>
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.Body)*@
-                    @Html.Raw(item.Body)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MediaURL)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Published)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }) |*@
-                    @Html.ActionLink("Details", "Details", new { slug = item.Slug })
-                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                </td>
-            </tr>
+<tr>
+    <td>
+        @item.Created.ToString("dddd, dd MMMM yyyy")
+    </td>
+    <td>
+
+        @Html.DisplayFor(modelItem => item.Updated)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Title)
+    </td>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.Slug)
+    </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.Abstract)
+    </td>
+    @*<td>
+        @Html.DisplayFor(modelItem => item.Body)
+        @Html.Raw(item.Body)
+    </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.Categories)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.MediaURL)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Published)
+    </td>
+    <td>
+
+        @if (User.IsInRole("Admin"))
+        {
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) <span>|</span>
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })<span>|</span>
+        }
+        @Html.ActionLink("Details", "Details", new { slug = item.Slug })<span>|</span>
+
+    </td>
+</tr>
             
         }
 

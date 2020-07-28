@@ -151,6 +151,8 @@ namespace blog.Controllers
         {
             if (ModelState.IsValid)
             {
+                var defaultDisplayName = model.Email;
+                defaultDisplayName = defaultDisplayName.Split('@').ToString();
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
