@@ -90,6 +90,17 @@ namespace blog.Migrations
 
             //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
             //  to avoid creating duplicate seed data.
+            #region Loading Categories
+            context.Categories.AddOrUpdate(
+                b => b.Name,
+                new Category { Name = "C#.Net", Description = "Includes C# code" },
+                new Category { Name = "JavaScrip", Description = "Includes CJavaScripcode" },
+                new Category { Name = "CSS", Description = "Includes CSS code" },
+                new Category { Name = "Html", Description = "Includes Html code" },
+                new Category { Name = "CoderLife", Description = "Includes info about coding life" }
+                );
+            #endregion
+
         }
     }
 }

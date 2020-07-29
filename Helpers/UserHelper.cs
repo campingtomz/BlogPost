@@ -12,7 +12,7 @@ namespace blog.Helpers
         public string GetDisplayName(string userId)
         {
             var user = db.Users.Find(userId);
-            return (user.DisplayName);
+            return user.DisplayName;
         }
         //public string GetFullName(string userId)
         //{

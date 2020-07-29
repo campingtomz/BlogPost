@@ -147,13 +147,15 @@ namespace blog.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> Register(ExtendedRegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var defaultDisplayName = model.Email;
-                defaultDisplayName = defaultDisplayName.Split('@').ToString();
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                //var defaultDisplayName = "test";
+                
+                //defaultDisplayName = defaultDisplayName.ToString();
+
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, DisplayName = model.DisplayName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {

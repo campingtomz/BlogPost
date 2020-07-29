@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using blog.Models;
+using Microsoft.Ajax.Utilities;
+using Microsoft.AspNet.Identity;
 
 namespace blog.Controllers
 {
@@ -17,7 +19,7 @@ namespace blog.Controllers
         // GET: Comments
         public ActionResult Index()
         {
-            return View(db.Cmments.ToList());
+            return View(db.Comments.ToList());
         }
 
         // GET: Comments/Details/5
@@ -27,7 +29,7 @@ namespace blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Cmments.Find(id);
+            Comment comment = db.Comments.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -36,6 +38,7 @@ namespace blog.Controllers
         }
 
         // GET: Comments/Create
+
         public ActionResult Create()
         {
             return View();
@@ -46,17 +49,25 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,PostId,AuthorId,Body,Created,Update,UpdateReason")] Comment comment)
+        public ActionResult Create(string body, int blogPostId, string slug)
         {
-            if (ModelState.IsValid)
+            if (body.IsNullOrWhiteSpace())
             {
-                db.Cmments.Add(comment);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "BlogPosts", new { slug });
             }
+            var comment = new Comment
+            {
+                Body = body,
+                Created = DateTime.Now,
+                PostId = blogPostId,
+                AuthorId = User.Identity.GetUserId()
+                };
 
-            return View(comment);
-        }
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                return RedirectToAction("Details", "BlogPosts", new { slug });
+            }
+        
 
         // GET: Comments/Edit/5
         public ActionResult Edit(int? id)
@@ -65,7 +76,7 @@ namespace blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Cmments.Find(id);
+            Comment comment = db.Comments.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -96,7 +107,7 @@ namespace blog.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Comment comment = db.Cmments.Find(id);
+            Comment comment = db.Comments.Find(id);
             if (comment == null)
             {
                 return HttpNotFound();
@@ -109,8 +120,8 @@ namespace blog.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Comment comment = db.Cmments.Find(id);
-            db.Cmments.Remove(comment);
+            Comment comment = db.Comments.Find(id);
+            db.Comments.Remove(comment);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

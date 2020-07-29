@@ -42,6 +42,8 @@ namespace blog.Models
             return new ApplicationDbContext();
         }
         public DbSet<BlogPost> BlogPosts { get; set; }
-        public DbSet<Comment> Cmments { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+
+        public System.Data.Entity.DbSet<blog.Models.Category> Categories { get; set; }
     }
 }

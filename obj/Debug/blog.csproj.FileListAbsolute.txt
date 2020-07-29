@@ -322,3 +322,6 @@ C:\Users\campi\Documents\GitHub\BlogPost\obj\Debug\blog.csproj.CoreCompileInputs
 C:\Users\campi\Documents\GitHub\BlogPost\obj\Debug\blog.csproj.CopyComplete
 C:\Users\campi\Documents\GitHub\BlogPost\obj\Debug\blog.dll
 C:\Users\campi\Documents\GitHub\BlogPost\obj\Debug\blog.pdb
+C:\Users\campi\Documents\GitHub\BlogPost\bin\CaptchaMvc.dll
+C:\Users\campi\Documents\GitHub\BlogPost\bin\CaptchaMvc.pdb
+C:\Users\campi\Documents\GitHub\BlogPost\bin\CaptchaMvc.xml
