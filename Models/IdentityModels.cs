@@ -43,6 +43,7 @@ namespace blog.Models
         }
         public DbSet<BlogPost> BlogPosts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<CategoryBlogPost> CategoryBlogPosts { get; set; }
 
         public System.Data.Entity.DbSet<blog.Models.Category> Categories { get; set; }
     }

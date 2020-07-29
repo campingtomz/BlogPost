@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace blog.Controllers
 {
+    [RequireHttps]
     public class CaptchaController : Controller
     {
         // GET: Captcha

@@ -12,6 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace blog.Controllers
 {
+    [RequireHttps]
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -38,7 +39,7 @@ namespace blog.Controllers
         }
 
         // GET: Comments/Create
-
+        [Authorize]
         public ActionResult Create()
         {
             return View();
@@ -49,6 +50,7 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Create(string body, int blogPostId, string slug)
         {
             if (body.IsNullOrWhiteSpace())
@@ -67,9 +69,10 @@ namespace blog.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Details", "BlogPosts", new { slug });
             }
-        
+
 
         // GET: Comments/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,6 +92,7 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public ActionResult Edit([Bind(Include = "Id,PostId,AuthorId,Body,Created,Update,UpdateReason")] Comment comment)
         {
             if (ModelState.IsValid)
@@ -101,6 +105,7 @@ namespace blog.Controllers
         }
 
         // GET: Comments/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -18,6 +18,7 @@ namespace blog.Models
         public DateTimeOffset? Update { get; set; }
         public string UpdateReason { get; set; }
         public virtual ApplicationUser Author { get; set; }
+        public virtual BlogPost Post { get; set; }
 
 
     }

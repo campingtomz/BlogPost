@@ -325,3 +325,7 @@ C:\Users\campi\Documents\GitHub\BlogPost\obj\Debug\blog.pdb
 C:\Users\campi\Documents\GitHub\BlogPost\bin\CaptchaMvc.dll
 C:\Users\campi\Documents\GitHub\BlogPost\bin\CaptchaMvc.pdb
 C:\Users\campi\Documents\GitHub\BlogPost\bin\CaptchaMvc.xml
+C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.dll
+C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.Mvc.dll
+C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.xml
+C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.Mvc.xml

@@ -11,10 +11,10 @@ namespace blog.Models
 
 		public string Name { get; set; }
 		public string Description { get; set; }
-		//nav
-		public virtual ICollection<BlogPost> BlogPosts { get; set; }
-		public Category(){
-			BlogPosts = new HashSet<BlogPost>();
-		}
+		////nav
+		//public virtual ICollection<BlogPost> BlogPosts { get; set; }
+		//public Category(){
+		//	BlogPosts = new HashSet<BlogPost>();
+		//}
 	}
 }

@@ -1,8 +1,9 @@
 ﻿@model blog.ViewModels.BlogPostDetailsVM
+    @using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Details";
 }
-    < class="site-section">
+ <div class="site-section">
 <div class="container">
     <h2>Details</h2>
     <div class="row">
@@ -27,7 +28,11 @@
                 </div>
                 <div class="vcard">
                     <span class="d-block"><a href="#">Thomas Zanis</a></span>
-                    <span class="d-block">Categories:<p> @Model.BlogPost.Categories</p></span>
+                    <span class="d-block">Categories:</span>
+                     @foreach (var category in Model.BlogPost.Categories)
+                     {
+
+                     }
                     <span class="date-read">@Model.BlogPost.Created.ToString("MMM dd yyyy")</span>
                 </div>
             </div>
@@ -70,9 +75,16 @@
                     <img src="images/person_1.jpg" alt="Image placeholder">
                 </div>
                 <div class="comment-body">
-                    <h3>@comment.Author</h3>
-                    <div class="meta">@comment.Created.ToString("MMM dd yyyy")</div>
-                    <p>@Html.Raw(comment.Body)</p>
+                    @*<div class="meta">@comment.Created.ToString("MMM dd yyyy")</div>*@
+                    <p id="comment-@comment.Id">@Html.Raw(comment.Body)</p>
+                    @if(comment.AuthorId!= null){
+                    <p>By: @comment.Author.DisplayName on @comment.Created.ToString("MMM dd yyyy") </p>}
+                    <hr />
+                    @if(User.IsInRole("Admin")|| User.IsInRole("Moderator") || User.Identity.GetUserId() == comment.AuthorId)
+                    {
+                        @Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })
+                        @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })
+                    }
 
                 </div>
             </li>
@@ -102,6 +114,7 @@
         </div>
     </div>
 }
+</div>
 
 
 <div class="container">
@@ -117,10 +130,10 @@
 
     </p>
 </div>
-@section Scripts {
+@*@section Scripts {
     <script src="~/Scripts/tinymce/tinymce.min.js"></script>
     <script src="~/Scripts/tinymce/jquery.tinymce.min.js"></script>
     <script src="~/Scripts/tinymce/tmce.js"></script>
 
 
-}
+}*@

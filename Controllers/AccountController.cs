@@ -12,6 +12,7 @@ using blog.Models;
 
 namespace blog.Controllers
 {
+    [RequireHttps]
     [Authorize]
     public class AccountController : Controller
     {
