@@ -3,12 +3,8 @@
 @{
     ViewBag.Title = "Log in";
 }
-@*<link href="~/Content/Login/animate/animate.css" rel="stylesheet" />
-    <link href="~/Content/Login/animsition/css/animsition.min.css" rel="stylesheet" />
-    <link href="~/Content/Login/css-hamburgers/hamburgers.min.css" rel="stylesheet" />*@
+    <link href="~/Content/registration.css" rel="stylesheet" />
 
-<link href="~/Content/Login/main.css" rel="stylesheet" />
-<link href="~/Content/Login/util.css" rel="stylesheet" />
 
 
 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
@@ -18,7 +14,7 @@
 
     <div class="limiter">
         <div class="container-login100">
-            <div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+            <div class="card card-4 wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
                 <form class="login100-form validate-form flex-sb flex-w">
                     <span class="login100-form-title p-b-53">
                         @ViewBag.Title

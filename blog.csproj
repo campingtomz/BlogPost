@@ -194,6 +194,7 @@
     <Compile Include="Models\BlogPost.cs" />
     <Compile Include="Models\CategoryBlogPosts.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,6 +209,8 @@
     <Content Include="Content\bootstrap\bootstrap-reboot.css" />
     <Content Include="Content\bootstrap\bootstrap.css" />
     <Content Include="Content\bootstrap\bootstrap.min.css" />
+    <Content Include="Content\ContactForm\main.css" />
+    <Content Include="Content\ContactForm\util.css" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\jquery.fancybox.min.css" />
     <Content Include="Content\jquery.mb.YTPlayer.min.css" />
@@ -324,6 +327,7 @@
     <Content Include="Content\Login\fonts\poppins\Poppins-SemiBoldItalic.ttf" />
     <Content Include="Content\Login\fonts\poppins\Poppins-Thin.ttf" />
     <Content Include="Content\Login\fonts\poppins\Poppins-ThinItalic.ttf" />
+    <Content Include="Private.config" />
     <None Include="Scripts\default\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\default\jquery-3.4.1.js" />
     <Content Include="Scripts\default\jquery-3.4.1.min.js" />
