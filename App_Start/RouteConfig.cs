@@ -1,4 +1,8 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace blog
@@ -9,6 +13,15 @@ namespace blog
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+                name: "NewSlug",
+                url: "Blog/Details/{slug}",
+                defaults: new
+                {
+                    controller = "BlogPosts",
+                    action = "Details",
+                    slug = UrlParameter.Optional
+            });
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -55,7 +55,6 @@ namespace blog.Controllers
         }
 
         // GET: BlogPosts/Details/5
-        [ValidateInput(false)]
         public ActionResult Details(string Slug)
         {
             var model = new BlogPostDetailsVM();

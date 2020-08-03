@@ -18,5 +18,22 @@ namespace blog.Helpers
         //{
 
         //}
+        public string GetFirstName(string userId)
+        {
+            var user = db.Users.Find(userId);
+            return user.FirstName;
+        }
+        public string GetLastName(string userId)
+        {
+            var user = db.Users.Find(userId);
+            return user.LastName;
+        }
+        public string GetFullName(string userId)
+        {
+            var firstName =  db.Users.Find(userId).FirstName;
+            var LastName = db.Users.Find(userId).LastName;
+            var fullName = firstName + " " + LastName;
+            return fullName;
+        }
     }
 }

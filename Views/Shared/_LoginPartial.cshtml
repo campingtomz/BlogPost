@@ -1,19 +1,42 @@
 ﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated) {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" })) {
-        @Html.AntiForgeryToken()
+@using blog.Helpers;
+@{ var userHelper = new UserHelper(); }
 
-        <ul class="nav navbar-nav navbar-right">
-            <li>
-                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-            </li>
-            <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-        </ul>
-    }
-}
-else {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+        @Html.AntiForgeryToken()
+                    <nav class=" navbar-right navbar navbar-expand-lg navbar-light bg-light">
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item">
+                                    @Html.ActionLink("Hello " + userHelper.GetFullName(User.Identity.GetUserId()) + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { @title = "Manage", @class = "nav-link" })
+                                </li>
+                                <li class="nav-item"><a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manage</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item navbar-text" href="#">@Html.ActionLink("Account", "INdex", "Manage", routeValues: null, htmlAttributes: new { title = "Manage", @class = "nav-link" })</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item navbar-text" href="#">@Html.ActionLink("BlogPostIndex", "Index", "BlogPosts", routeValues: null, htmlAttributes: new { id = "BlogPostIndexLink", @class = "nav-link" })</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item navbar-text" href="#">@Html.ActionLink("CommentsIndex", "Index", "Comments", routeValues: null, htmlAttributes: new { id = "CommentsIndexLink", @class = "nav-link" })</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item navbar-text" href="#">@Html.ActionLink("CategoriesIndex", "Index", "Categories", routeValues: null, htmlAttributes: new { id = "CategoriesIndexIndexLink", @class = "nav-link" })</a>
+                                </div>
+                            </li>
+                                }
+                            </ul>
+                            </div>
+                    </nav> }
+            }
+            else
+            {
+<ul class="nav navbar-nav navbar-right">
+    <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+    <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+</ul>}

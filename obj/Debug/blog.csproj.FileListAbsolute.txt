@@ -329,7 +329,3 @@ C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.dll
 C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.Mvc.dll
 C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.xml
 C:\Users\campi\Documents\GitHub\BlogPost\bin\PagedList.Mvc.xml
-C:\Users\campi\Documents\GitHub\BlogPost\bin\SendGrid.dll
-C:\Users\campi\Documents\GitHub\BlogPost\bin\StarkbankEcdsa.dll
-C:\Users\campi\Documents\GitHub\BlogPost\bin\SendGrid.pdb
-C:\Users\campi\Documents\GitHub\BlogPost\bin\SendGrid.xml
