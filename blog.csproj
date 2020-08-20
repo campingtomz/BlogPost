@@ -848,15 +848,26 @@
     <Content Include="Scripts\tinymce\tinymce.min.js" />
     <Content Include="Scripts\tinymce\tmce.js" />
     <Content Include="Scripts\typed.js" />
+    <Content Include="Uploads\116589386-619325835454327-3819627390560244487-n_637327665124283428.jpg" />
     <Content Include="Uploads\blackBackground.png" />
     <Content Include="Uploads\favicon\zanis-logo%402x.png" />
     <Content Include="Uploads\favicon\zanis-logo.png" />
     <Content Include="Uploads\photo-1485827404703-89b55fcc595e_637316318144226167.jpg" />
+    <Content Include="Uploads\photo-1498050108023-c5249f4df085-637316314877935751_637334741355185434.jpg" />
+    <Content Include="Uploads\photo-1498050108023-c5249f4df085-637316314877935751_637334784365179912.jpg" />
     <Content Include="Uploads\photo-1498050108023-c5249f4df085_637316314877935751.jpg" />
+    <Content Include="Uploads\photo-1519389950473-47ba0277781c-637316266881145674_637334724002765215.jpg" />
+    <Content Include="Uploads\photo-1519389950473-47ba0277781c-637316266881145674_637334727181100618.jpg" />
+    <Content Include="Uploads\photo-1519389950473-47ba0277781c-637316266881145674_637334738256388312.jpg" />
+    <Content Include="Uploads\photo-1519389950473-47ba0277781c-637316266881145674_637334781461287263.jpg" />
+    <Content Include="Uploads\photo-1519389950473-47ba0277781c-637316266881145674_637334784718240142.jpg" />
     <Content Include="Uploads\photo-1519389950473-47ba0277781c_637316266881145674.jpg" />
     <Content Include="Uploads\photo-1519389950473-47ba0277781c_637316312106498329.jpg" />
+    <Content Include="Uploads\photo-1573164713988-8665fc963095-637314615921312240_637334822149511472.jpg" />
     <Content Include="Uploads\photo-1573164713988-8665fc963095_637314615921312240.jpg" />
     <Content Include="Uploads\photo-1573164713988-8665fc963095_637314616490936987.jpg" />
+    <Content Include="Uploads\tenor.gif" />
+    <Content Include="Uploads\tenor_637334828702077506.gif" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
