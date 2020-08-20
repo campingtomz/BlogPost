@@ -13,6 +13,21 @@ namespace blog.Helpers
         {
             return db.Categories.Find(id);
         }
+        public string PrintCategories(List<Category> categoriesList)
+        {
+            if(categoriesList.Count < 1)
+            {
+                return "";
+            }
+            if (categoriesList.Count == 1)
+            {
+                return categoriesList.First().Name;
+            }
+            else
+            {
+                return String.Join(", ", categoriesList.Select(c => c.Name));
+            }
+        }
 
     }
 }

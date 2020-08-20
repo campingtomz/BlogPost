@@ -17,13 +17,14 @@
     <link href="~/Content/Icons/flaticon/font/flaticon.css" rel="stylesheet" />
     <link href="~/Content/Icons/icomoon/style.css" rel="stylesheet" />
     <link href="~/Content/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="~/Content/style.css">
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
     <link href="~/Content/Login/main.css" rel="stylesheet" />
     <link href="~/Content/Login/util.css" rel="stylesheet" />
-
+    <link href="~/Content/DataTables/css/jquery.dataTables.min.css" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/843a961c10.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="~/Content/style.css">
+
 </head>
 
 <body data-spy="scroll" data-target=".site-navbar-target" data-offset="300">
@@ -77,7 +78,8 @@
                                         @Html.ActionLink("Home", "Index", "Home")
                                     </li>
                                     <li>
-                                        <a href="categories.html" class="nav-link text-left">Categories</a>
+                                        @Html.ActionLink("Categories", "Index", "Categories")
+                                        @*<a href="categories.html" class="nav-link text-left">Categories</a>*@
                                     </li>
                                     <li><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Portfolio</a></li>
                                     @*<li>
@@ -152,8 +154,7 @@
     <script src="~/Scripts/jquery.sticky.js"></script>
     <script src="~/Scripts/jquery.mb.YTPlayer.min.js"></script>
     <script src="~/Scripts/jquery.dataTables.min.js"></script>
-
-    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+ 
 
 
     <script src="~/Scripts/main.js"></script>

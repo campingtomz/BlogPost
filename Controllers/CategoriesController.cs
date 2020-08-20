@@ -36,7 +36,7 @@ namespace blog.Controllers
             }
             return View(category);
         }
-
+        [Authorize(Roles = "Admin")]
         // GET: Categories/Create
         public ActionResult Create()
         {

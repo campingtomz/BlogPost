@@ -12,6 +12,7 @@ using blog.Models;
 using blog.ViewModels;
 using PagedList;
 using PagedList.Mvc;
+using Microsoft.AspNet.Identity;
 
 namespace blog.Controllers
 {
@@ -22,18 +23,18 @@ namespace blog.Controllers
         private BlogPostHelper blogPostHelper = new BlogPostHelper();
 
         // GET: BlogPosts
- 
+
         public ActionResult Index()
         {
             var model = db.BlogPosts.ToList();
-            var post = db.BlogPosts.Find(7);
-            var cat = post.Categories.Select(c => c.Name);
-            var text = String.Join(",", cat);
+            //var post = db.BlogPosts.Find(7);
+            //var cat = post.Categories.Select(c => c.Name);
+            //var text = String.Join(",", cat);
 
             return View(model);
 
         }
-       
+
         // GET: BlogPosts/Details/5
         public ActionResult Details(string Slug)
         {
@@ -50,11 +51,11 @@ namespace blog.Controllers
 
         public ActionResult Categories()
         {
-           
+
             return View();
         }
-            // GET: BlogPosts/Create
-            [Authorize(Roles = "Admin")]
+        // GET: BlogPosts/Create
+        [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.CategoryIds = new MultiSelectList(db.Categories.ToList(), "Id", "Name");
@@ -71,7 +72,7 @@ namespace blog.Controllers
         {
             if (ModelState.IsValid)
             {
-               
+
                 var Slug = StringUtilities.URLFriendly(blogPost.Title);
                 if (String.IsNullOrWhiteSpace(Slug))
                 {
@@ -83,7 +84,7 @@ namespace blog.Controllers
                     ModelState.AddModelError("Title", "The title must be unique");
                     return View(blogPost);
                 }
-                
+
                 if (ImageUploadValidator.IsWebFriendlyImage(image))
                 {
                     var fileName = Path.GetFileName(image.FileName);
@@ -97,15 +98,18 @@ namespace blog.Controllers
                 blogPost.Created = DateTime.Now;
                 if (CategoryIds != null && CategoryIds.Count > 0)
                 {
-                    foreach(var categoryId in CategoryIds)
+                    foreach (var categoryId in CategoryIds)
                     {
-                        blogPost.Categories.Add(blogPostHelper.GetCategory(categoryId));
+
+                        blogPost.Categories.Add(db.Categories.Find(categoryId));
                     }
                 }
+                blogPost.userId = User.Identity.GetUserId();
                 db.BlogPosts.Add(blogPost);
+
                 db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                return RedirectToAction("Index");
             }
 
             return View(blogPost);
@@ -162,12 +166,17 @@ namespace blog.Controllers
                 }
 
                 blogPost.Updated = DateTime.Now;
-                db.Entry(blogPost).State = EntityState.Modified;
-                db.SaveChanges();
+
                 if (CategoryIds != null && CategoryIds.Count > 0)
                 {
-    
+                    blogPost.Categories.Clear();
+
+                    foreach (var categoryId in CategoryIds)
+                    {
+                        blogPost.Categories.Add(db.Categories.Find(categoryId));
+                    }
                 }
+                db.Entry(blogPost).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

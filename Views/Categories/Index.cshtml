@@ -1,105 +1,51 @@
 ﻿@model IEnumerable<blog.Models.Category>
-
+@using blog.Helpers
+@{BlogPostHelper blogPostHelper = new BlogPostHelper();}
 @{ ViewBag.Title = "Index"; }
 
-<h2>Index</h2>
+<h2>Categories</h2>
 
 
-<h4 class="card-title">Comment List</h4>
-<div class="table-responsive m-t-40">
-    <table id="example23" class="display nowrap table table-hover table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Description)
-                </th>
-                <th>Action</th>
-            </tr>
-        </thead>
-            @foreach (var item in Model)
-            {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Name)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Description)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-    </td>
-</tr>}
+<div class="site-section py-0">
+    @foreach (var category in Model)
+    {
+        if (category.blogPosts.Count > 0)
+        {<div class="row">
 
-    </table>
-    </div>
-    <p>
-        @if (User.IsInRole("Admin"))
-        {
-@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })}
-    </p>
+                <span><h2>@category.Name</h2></span>
+                <div class="owl-carousel hero-slide owl-style ">
 
-    @section Scripts
-{
-        <script src="~/Scripts/jquery.dataTables.min.js"></script>
-        <script>
-            $(document).ready(function () {
-                $('#myTable').DataTable();
+                    @foreach (var blogPost in category.blogPosts)
+                    {
 
-                $(document).ready(function () {
-                    var table = $('#example').DataTable({
-                        "columnDefs": [{
-                            "visible": false,
-                            "targets": 2
-                        }],
-                        "order": [
-                            [2, 'asc']
-                        ],
-                        "displayLength": 25,
-                        "drawCallback": function (settings) {
-                            var api = this.api();
-                            var rows = api.rows({
-                                page: 'current'
-                            }).nodes();
-                            var last = null;
-                            api.column(2, {
-                                page: 'current'
-                            }).data().each(function (group, i) {
-                                if (last !== group) {
-                                    $(rows).eq(i).before('<tr class="group"><td colspan="5">' + group + '</td></tr>');
-                                    last = group;
-                                }
-                            });
-                        }
-                    });
-                    // Order by the grouping
-                    $('#example tbody').on('click', 'tr.group', function () {
-                        var currentOrder = table.order()[0];
-                        if (currentOrder[0] === 2 && currentOrder[1] === 'asc') {
-                            table.order([2, 'desc']).draw();
-                        } else {
-                            table.order([2, 'asc']).draw();
-                        }
-                    });
-                });
+                        <div class="site-section">
+                            <div class="container">
+                                <div class="half-post-entry d-block d-lg-flex bg-light">
+                                    @if (blogPost.MediaURL != null)
+                                    {
+                                        <div class="img-bg" style="background-image: url('@blogPost.MediaURL')"></div>
+                                    }
+                                    <div class="contents">
+                                        <span class="caption">Editor's Pick</span>
 
-                $('#example23').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
-                $('.example24').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
-            });
+                                        <a href=@Url.Action("Details", "BlogPosts", new { slug = blogPost.Slug })><h2>@blogPost.Title</h2></a>
+                                        <p class="mb-3">@blogPost.Abstract</p>
 
-        </script>
+                                        <div class="post-meta">
+                                            <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> in <span> @blogPostHelper.PrintCategories(blogPost.Categories.ToList())</span></span>
+                                            <span class="date-read">@blogPost.Created.ToString("MMM dd yyyy") </span>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+                </div>
+            </div>
         }
+    }
+
+</div>
+

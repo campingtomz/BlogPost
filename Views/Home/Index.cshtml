@@ -1,7 +1,8 @@
 ﻿@using blog.Models
+@using blog.Helpers
 @model IEnumerable<BlogPost>
 
-
+@{BlogPostHelper blogPostHelper = new BlogPostHelper();}
 <div class="site-section py-0">
     <div class="owl-carousel hero-slide owl-style">
         @foreach (var blogPost in Model.Take(3))
@@ -21,11 +22,9 @@
                             <p class="mb-3">@blogPost.Abstract</p>
 
                             <div class="post-meta">
-                                <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> in <a href="#">C#</a></span>
+                                <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">By: Thomas Zanis</a> in <span> @blogPostHelper.PrintCategories(blogPost.Categories.ToList())</span></span>
                                 <span class="date-read">@blogPost.Created.ToString("MMM dd yyyy") </span>
-                                <span>
-                                    <p>@String.Join(",", blogPost.Categories)</p>
-                                </span>
+
                             </div>
                         </div>
                     </div>
@@ -63,32 +62,32 @@
                                 <a href=@Url.Action("Details", "BlogPosts", new { slug = EditorPick.Slug })><h2>@EditorPick.Title</h2></a>
                                 <p>@EditorPick.Abstract</p>
                                 <div class="post-meta">
-                                    <a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a>
+                                    <span class="d-block"> <a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">By: Thomas Zanis</a> in <span> @blogPostHelper.PrintCategories(EditorPick.Categories.ToList())</span></span>
                                     <span class="date-read">@EditorPick.Created.ToString("MMM dd yyyy") </span>
                                 </div>
                             </div>
                         </div>
                     }
-                <div class="col-md-6">
-                    @foreach (var Editorposts in Model.Skip(1))
+                    <div class="col-md-6">
+                        @foreach (var Editorposts in Model.Skip(1))
 
-                    {
+                        {
 
-                        <div class="post-entry-2 d-flex bg-light">
-                            @if (Editorposts.MediaURL != null)
-                            {
-                                <div class="thumbnail" style="background-image: url('@Editorposts.MediaURL')"></div>
-                            }
-                            <div class="contents">
-                                <a href=@Url.Action("Details", "BlogPosts", new { slug = Editorposts.Slug })><h2>@Editorposts.Title</h2></a>
-                                <div class="post-meta">
-                                    <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> </span>
-                                    <span class="date-read">@Editorposts.Created.ToString("MMM dd yyyy") </span>
+                            <div class="post-entry-2 d-flex bg-light">
+                                @if (Editorposts.MediaURL != null)
+                                {
+                                    <div class="thumbnail" style="background-image: url('@Editorposts.MediaURL')"></div>
+                                }
+                                <div class="contents">
+                                    <a href=@Url.Action("Details", "BlogPosts", new { slug = Editorposts.Slug })><h2>@Editorposts.Title</h2></a>
+                                    <div class="post-meta">
+                                        <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">By: Thomas Zanis</a> </span>
+                                        <span class="date-read">@Editorposts.Created.ToString("MMM dd yyyy") </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    }
-                </div>
+                        }
+                    </div>
                 </div>
             </div>
 
@@ -99,17 +98,17 @@
                 @{ var count = 1;}
                 @foreach (var trending in Model.Skip(1))
                 {
-                <div class="trend-entry d-flex">
-                    <div class="number align-self-start">@count</div>
-                    <div class="trend-contents">
-                        <a href=@Url.Action("Details", "BlogPosts", new { slug = trending.Slug })><h2>@trending.Title</h2></a>
-                        <div class="post-meta">
-                            <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> </span>
-                            <span class="date-read">@trending.Created.ToString("MMM dd yyyy")</span>
+                    <div class="trend-entry d-flex">
+                        <div class="number align-self-start">@count</div>
+                        <div class="trend-contents">
+                            <a href=@Url.Action("Details", "BlogPosts", new { slug = trending.Slug })><h2>@trending.Title</h2></a>
+                            <div class="post-meta">
+                                <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> </span>
+                                <span class="date-read">@trending.Created.ToString("MMM dd yyyy")</span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                    { count++;}
+                    { count++; }
                 }
 
             </div>

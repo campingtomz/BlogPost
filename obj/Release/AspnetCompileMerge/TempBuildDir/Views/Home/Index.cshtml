@@ -24,10 +24,7 @@
                                 <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> in <a href="#">C#</a></span>
                                 <span class="date-read">@blogPost.Created.ToString("MMM dd yyyy") </span>
                                 <span>
-                                    @foreach (var category in blogPost.Categories)
-                                    {
-                                        @category.Name
-                                    }
+                                    <p>@String.Join(",", blogPost.Categories)</p>
                                 </span>
                             </div>
                         </div>

@@ -25,9 +25,7 @@
                         <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> </span>
                         <span class="d-block">Categories:</span>
                         <span class="d-block">
-                            @foreach (var category in Model.BlogPost.Categories)
-                            {
-                                    <p>@category.Name</p>}
+                            <p>@String.Join(",", Model.BlogPost.Categories)</p>
                         </span>
                         <span class="date-read">@Model.BlogPost.Created.ToString("MMM dd yyyy")</span>
                     </div>
@@ -49,15 +47,14 @@
             <div class="post-meta">
                 <span class="d-block">
                     <a href="#">Thomas Zanis</a> in
-                    @foreach (var category in Model.BlogPost.Categories)
-                    {
-    <p>@category.Name</p>}
+                                
+                    <p>@String.Join(",", Model.BlogPost.Categories)</p>
                 </span>
                 <span class="date-read">@post.Created.ToString("MMM dd yyyy")</span>
             </div>
         </div>
     </div>      { count++; }
-}
+                    }
 
             </div>
         </div>
@@ -70,29 +67,28 @@
         <ul class="comment-list">
             @{ var countComment = 1;}
             @foreach (var comment in Model.BlogPost.Comments)
-            {
-                <li class="comment">
-                    <div class="number align-self-start"><h4>Comment @countComment</h4></div>
-                    <div class="vcard bio">
-                        @*<img src="images/person_1.jpg" alt="Image placeholder">*@
-                    </div>
-                    
-                    <div class="comment-body">
-                        @*<div class="meta">@comment.Created.ToString("MMM dd yyyy")</div>*@
-                        <p id="comment-@comment.Id">@Html.Raw(comment.Body)</p>
-                        @if (comment.AuthorId != null)
-                        {
-                <p>By: @comment.Author.DisplayName on @comment.Created.ToString("MMM dd yyyy") </p>}
-                        <hr />
-                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-                        {
-                @Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })
-                                    @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })}
+                    {
+<li class="comment">
+    <div class="number align-self-start"><h4>Comment @countComment</h4></div>
+    <div class="vcard bio">
+        @*<img src="images/person_1.jpg" alt="Image placeholder">*@
+    </div>
 
-                    </div>
-                </li>
-                { countComment++; }
-                }
+    <div class="comment-body">
+        @*<div class="meta">@comment.Created.ToString("MMM dd yyyy")</div>*@
+        <p id="comment-@comment.Id">@Html.Raw(comment.Body)</p>
+        @if (comment.AuthorId != null)
+        {
+<p>By: @comment.Author.DisplayName on @comment.Created.ToString("MMM dd yyyy") </p>}
+        <hr />
+        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+        {
+@Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })}
+
+    </div>
+</li>                { countComment++; }
+            }
         </ul>
     </div>
 
@@ -123,11 +119,11 @@
     <p>
         @Html.ActionLink("Home", "Index", "Home") |
 
-        
+
         @if (User.IsInRole("Admin"))
         {
-    @Html.ActionLink("Back to List", "Index") <span> |</span>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPost.Id }) <span> |</span>}
+@Html.ActionLink("Back to List", "Index") <span> |</span>
+                @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPost.Id }) <span> |</span>}
 
 
     </p>

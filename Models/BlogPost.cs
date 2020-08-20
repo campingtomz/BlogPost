@@ -15,6 +15,8 @@ namespace blog.Models
         public int Id { get; set; }
         public DateTimeOffset Created { get; set; }
         public DateTimeOffset? Updated { get; set; }
+        public string userId { get; set; }
+        public virtual ApplicationUser User { get; set; }
         public string Title { get; set; }
         public string Slug { get; set; }
         public string Abstract { get; set; }

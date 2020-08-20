@@ -14,7 +14,11 @@ namespace blog.Migrations
         {
             AutomaticMigrationsEnabled = true;
         }
-
+        private string RandomPhoneNumber()
+        {
+            var rand = new Random();
+            return $"({rand.Next(100, 1000)})-{rand.Next(100, 1000)}-{rand.Next(1000, 10000)}";
+        }
         protected override void Seed(blog.Models.ApplicationDbContext context)
         {
             var roleManager = new RoleManager<IdentityRole>(
@@ -41,7 +45,9 @@ namespace blog.Migrations
                     UserName = "AndrewRussell@coderfoundry.com",
                     FirstName = "Andrew",
                     LastName = "Russell",
-                    DisplayName = "The Duke"
+                    DisplayName = "The Duke",
+                    AvatarPath = "/Avatars/DemoUserAvatars/Default_Avatar.png",
+                    PhoneNumber = RandomPhoneNumber()
 
                 }, 
                 "HelloNurse!");
@@ -60,7 +66,9 @@ namespace blog.Migrations
                     UserName = "thomas.j.zanis@gmail.com",
                     FirstName = "Thomas",
                     LastName = "Zanis",
-                    DisplayName = "The King"
+                    DisplayName = "The King",
+                    AvatarPath = "/Avatars/DemoUserAvatars/2.jpg",
+                    PhoneNumber = RandomPhoneNumber()
 
                 },
                 "Tobeornot123!");
@@ -77,7 +85,9 @@ namespace blog.Migrations
                     Email = "moderator@coderfoundry.com",
                     UserName = "moderator@coderfoundry.com",
                     FirstName = "moderator",
-                    DisplayName = "The Lord"
+                    DisplayName = "The Lord",
+                    AvatarPath = "/Avatars/DemoUserAvatars/Default_Avatar.png",
+                    PhoneNumber = RandomPhoneNumber()
 
                 },
                 "123456Abc$");

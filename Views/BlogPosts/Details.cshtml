@@ -1,6 +1,7 @@
 ﻿@model blog.ViewModels.BlogPostDetailsVM
 @using Microsoft.AspNet.Identity
-@{ ViewBag.Title = "Details"; }
+@{ ViewBag.Title = "Details";
+    var blogPostHelper = new blog.Helpers.BlogPostHelper();}
 <div class="site-section">
     <div class="container">
         <h2>Details</h2>
@@ -10,7 +11,7 @@
                 <p class="mb-5">
                     @if (Model.BlogPost.MediaURL != null)
                     {
-        <img src="@Model.BlogPost.MediaURL" alt="Image" class="img-fluid">}
+                        <img src="@Model.BlogPost.MediaURL" alt="Image" class="img-fluid">}
                 </p>
                 <h1 class="mb-4">
                     @Model.BlogPost.Title
@@ -19,45 +20,42 @@
                     <div class="bio-pic mr-3">
                         @if (Model.BlogPost.MediaURL != null)
                         {
-            <img src="@Model.BlogPost.MediaURL" alt="Image" class="img-fluidid">}
+                            <img src="@Model.BlogPost.User.AvatarPath" alt="Image" class="img-fluidid">}
                     </div>
                     <div class="vcard">
                         <span class="d-block"><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a> </span>
-                        <span class="d-block">Categories:</span>
-                        <span class="d-block">
-                            <p>@String.Join(",", Model.BlogPost.Categories)</p>
-                        </span>
+
                         <span class="date-read">@Model.BlogPost.Created.ToString("MMM dd yyyy")</span>
                     </div>
                 </div>
                 <p>@Html.Raw(Model.BlogPost.Body)</p>
-            </div>
+                <div class="pt-5">
+                    <p class="d-block">Categories: @blogPostHelper.PrintCategories(Model.BlogPost.Categories.ToList())</p>
+                    </div>
 
-            <div class="col-lg-3 ml-auto">
-                <div class="section-title">
-                    <h2>Popular Posts</h2>
                 </div>
-                @{ var count = 1;}
-                @foreach (var post in Model.SidePosts)
-                {
-    <div class="trend-entry d-flex">
-        <div class="number align-self-start">@count</div>
-        <div class="trend-contents">
-            <h2><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
-            <div class="post-meta">
-                <span class="d-block">
-                    <a href="#">Thomas Zanis</a> in
-                                
-                    <p>@String.Join(",", Model.BlogPost.Categories)</p>
-                </span>
-                <span class="date-read">@post.Created.ToString("MMM dd yyyy")</span>
-            </div>
-        </div>
-    </div>      { count++; }
+
+                <div class="col-lg-3 ml-auto">
+                    <div class="section-title">
+                        <h2>Popular Posts</h2>
+                    </div>
+                    @{ var count = 1;}
+                    @foreach (var post in Model.SidePosts)
+                    {
+                        <div class="trend-entry d-flex">
+                            <div class="number align-self-start">@count</div>
+                            <div class="trend-contents">
+                                <h2><a href="@Url.Action("Details", new { slug = post.Slug })">@post.Title</a></h2>
+                                <div class="post-meta">
+                                    <span class="d-block"><a href="#">Thomas Zanis</a> in <a href="#"> @blogPostHelper.PrintCategories(post.Categories.ToList())</a></span>
+                                    <span class="date-read">@post.Created.ToString("MMM dd yyyy")</span>
+                                </div>
+                            </div>
+                        </div>{ count++; }
                     }
 
+                </div>
             </div>
-        </div>
     </div>
 
     <div class="pt-5">
@@ -67,27 +65,28 @@
         <ul class="comment-list">
             @{ var countComment = 1;}
             @foreach (var comment in Model.BlogPost.Comments)
-                    {
-<li class="comment">
-    <div class="number align-self-start"><h4>Comment @countComment</h4></div>
-    <div class="vcard bio">
-        @*<img src="images/person_1.jpg" alt="Image placeholder">*@
-    </div>
+            {
+                <li class="comment">
+                    <div class="number align-self-start"><h4>Comment @countComment</h4></div>
+                    <div class="vcard bio">
+                        <img src="@comment.Author.AvatarPath" alt="Image placeholder">
+                    </div>
 
-    <div class="comment-body">
-        @*<div class="meta">@comment.Created.ToString("MMM dd yyyy")</div>*@
-        <p id="comment-@comment.Id">@Html.Raw(comment.Body)</p>
-        @if (comment.AuthorId != null)
-        {
-<p>By: @comment.Author.DisplayName on @comment.Created.ToString("MMM dd yyyy") </p>}
-        <hr />
-        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
-        {
-@Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })}
+                    <div class="comment-body">
+                        @*<div class="meta">@comment.Created.ToString("MMM dd yyyy")</div>*@
+                        <p id="comment-@comment.Id">@Html.Raw(comment.Body)</p>
+                        @if (comment.AuthorId != null)
+                        {
+                            <p>By: @comment.Author.DisplayName on @comment.Created.ToString("MMM dd yyyy") </p>}
+                        <hr />
+                        @if (User.IsInRole("Admin") || User.IsInRole("Moderator"))
+                        {
+                            @Html.ActionLink("Edit Comment", "Edit", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })
+                            @Html.ActionLink("Delete Comment", "Delete", "Comments", new { id = comment.Id }, new { @class = "btn btn-warning" })}
 
-    </div>
-</li>                { countComment++; }
+                    </div>
+                </li>
+           { countComment++; }
             }
         </ul>
     </div>
@@ -97,21 +96,21 @@
 
     @if (User.Identity.IsAuthenticated)
     {
-<div class="container-fluid">
-    <div class="=row">
-        <div class="col-md-6 col-md-offset-3">
-            @using (Html.BeginForm("Create", "Comments", FormMethod.Post))
-            {
-@Html.AntiForgeryToken()
-                    @Html.Hidden("BlogPostId", Model.BlogPost.Id)
-                                        @Html.Hidden("Slug", Model.BlogPost.Slug)
-                                                            @Html.TextArea("Body", new { @class = "form-control" })
-                                                                                @Html.ValidationMessage("Body", "", new { @class = "text-danger" })
-                                                                                                    <br />
-                                                                                                                        <button class="btn btn-danger" type="submit">Submit Comment</button>}
-        </div>
-    </div>
-</div>}
+        <div class="container-fluid">
+            <div class="=row">
+                <div class="col-md-6 col-md-offset-3">
+                    @using (Html.BeginForm("Create", "Comments", FormMethod.Post))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("BlogPostId", Model.BlogPost.Id)
+                        @Html.Hidden("Slug", Model.BlogPost.Slug)
+                        @Html.TextArea("Body", new { @class = "form-control" })
+                        @Html.ValidationMessage("Body", "", new { @class = "text-danger" })
+                        <br />
+                        <button class="btn btn-danger" type="submit">Submit Comment</button>}
+                </div>
+            </div>
+        </div>}
 </div>
 
 
@@ -122,8 +121,8 @@
 
         @if (User.IsInRole("Admin"))
         {
-@Html.ActionLink("Back to List", "Index") <span> |</span>
-                @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPost.Id }) <span> |</span>}
+            @Html.ActionLink("Back to List", "Index") <span> |</span>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.BlogPost.Id }) <span> |</span>}
 
 
     </p>

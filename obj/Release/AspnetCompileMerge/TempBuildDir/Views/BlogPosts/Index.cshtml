@@ -54,13 +54,8 @@
     </td>
 
     <td>
-
-        @foreach (var category in item.Categories.ToList())
-        {
-<p>@category.Name</p>}
-
-        @*@Html.DisplayFor(modelItem => item.Categories)*@
-    </td>
+        @*@item.Categories.Select(c =>c.Name).ToList().Join(",")*@
+        @String.Join(",", item.Categories.Select(c => c.Name))
     <td>
         @Html.DisplayFor(modelItem => item.MediaURL)
     </td>
