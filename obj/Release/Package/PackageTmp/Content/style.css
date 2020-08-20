@@ -574,6 +574,7 @@ h1, h2, h3, h4, h5,
   .owl-slide-3 .owl-nav .owl-next, .owl-slide .owl-nav .owl-prev,
   .owl-slide .owl-nav .owl-next, .owl-style .owl-nav .owl-prev,
   .owl-style .owl-nav .owl-next {
+
     position: absolute;
     top: 50%;
     text-align: center;

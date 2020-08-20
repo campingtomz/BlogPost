@@ -19,41 +19,21 @@ namespace blog.Controllers
     public class BlogPostsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-      
+        private BlogPostHelper blogPostHelper = new BlogPostHelper();
 
         // GET: BlogPosts
-        public ActionResult Index(int? page, string searchStr)
+ 
+        public ActionResult Index()
         {
-            ViewBag.Search = searchStr;
-            var blogList = IndexSearch(searchStr);
-            int pageSize = 10; //Specifies the number of posts per page
-            int pageNumber = ( page ?? 1); //?? null coalescing operator
-            var model = blogList.ToPagedList(pageNumber, pageSize);
-            //var allBlogPosts = db.BlogPosts.OrderBy(b => b.Created).ToPagedList(pageNumber, pageSize);
+            var model = db.BlogPosts.ToList();
+            var post = db.BlogPosts.Find(7);
+            var cat = post.Categories.Select(c => c.Name);
+            var text = String.Join(",", cat);
+
             return View(model);
 
         }
-        public IQueryable<BlogPost> IndexSearch(string searchStr)
-        {
-            IQueryable<BlogPost> result = null;
-            if(searchStr != null)
-            {
-                result = db.BlogPosts.AsQueryable();
-                result = result.Where(b => b.Title.Contains(searchStr) ||
-                                           b.Body.Contains(searchStr) ||
-                                           b.Comments.Any(c => c.Body.Contains(searchStr) ||
-                                           c.Author.FirstName.Contains(searchStr) ||
-                                           c.Author.LastName.Contains(searchStr) ||
-                                           c.Author.DisplayName.Contains(searchStr) ||
-                                           c.Author.Email.Contains(searchStr)));
-            }
-            else
-            {
-                result = db.BlogPosts.AsQueryable();
-            }
-            return result.OrderByDescending(p => p.Created);
-        }
-
+       
         // GET: BlogPosts/Details/5
         public ActionResult Details(string Slug)
         {
@@ -63,22 +43,18 @@ namespace blog.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             model.BlogPost = db.BlogPosts.Include(b => b.Comments).FirstOrDefault(p => p.Slug == Slug);
-            var blogCategories = db.CategoryBlogPosts.Where(c => c.BlogPostId == model.BlogPost.Id).ToList();
-            foreach(var category in blogCategories)
-            {
-                model.BlogPost.Categories.Add(db.Categories.Find(category.CategoryId));
-            }
-            if (model.BlogPost == null)
-            {
-                return HttpNotFound();
-            }
+
             model.SidePosts = db.BlogPosts.ToList();
             return View(model);
         }
 
-
-        // GET: BlogPosts/Create
-        [Authorize(Roles = "Admin")]
+        public ActionResult Categories()
+        {
+           
+            return View();
+        }
+            // GET: BlogPosts/Create
+            [Authorize(Roles = "Admin")]
         public ActionResult Create()
         {
             ViewBag.CategoryIds = new MultiSelectList(db.Categories.ToList(), "Id", "Name");
@@ -91,7 +67,7 @@ namespace blog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Create([Bind(Include = "Title, Updated, Body, Abstract, Categories, Published")] BlogPost blogPost, HttpPostedFileBase image, List<int> categoryIds)
+        public ActionResult Create([Bind(Include = "Title, Updated, Body, Abstract, Categories, Published")] BlogPost blogPost, HttpPostedFileBase image, List<int> CategoryIds)
         {
             if (ModelState.IsValid)
             {
@@ -119,21 +95,16 @@ namespace blog.Controllers
                 }
                 blogPost.Slug = Slug;
                 blogPost.Created = DateTime.Now;
+                if (CategoryIds != null && CategoryIds.Count > 0)
+                {
+                    foreach(var categoryId in CategoryIds)
+                    {
+                        blogPost.Categories.Add(blogPostHelper.GetCategory(categoryId));
+                    }
+                }
                 db.BlogPosts.Add(blogPost);
                 db.SaveChanges();
 
-                if (categoryIds != null && categoryIds.Count > 0)
-                {
-                    foreach (var categoryId in categoryIds)
-                    {
-                        db.CategoryBlogPosts.Add(new CategoryBlogPost
-                        {
-                            BlogPostId = blogPost.Id,
-                            CategoryId = categoryId
-                        });
-                    }
-                }
-                db.SaveChanges();
                     return RedirectToAction("Index");
             }
 
@@ -153,6 +124,7 @@ namespace blog.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategoryIds = new MultiSelectList(db.Categories.ToList(), "Id", "Name");
             return View(blogPost);
         }
 
@@ -162,7 +134,7 @@ namespace blog.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
-        public ActionResult Edit([Bind(Include = "Id,Created,Title,Body, Abstract,Categories,MediaURL,Published, Slug")] BlogPost blogPost, HttpPostedFileBase image)
+        public ActionResult Edit([Bind(Include = "Id,Created,Title,Body, Abstract,Categories,MediaURL,Published, Slug")] BlogPost blogPost, HttpPostedFileBase image, List<int> CategoryIds)
         {
             if (ModelState.IsValid)
             {
@@ -191,6 +163,11 @@ namespace blog.Controllers
 
                 blogPost.Updated = DateTime.Now;
                 db.Entry(blogPost).State = EntityState.Modified;
+                db.SaveChanges();
+                if (CategoryIds != null && CategoryIds.Count > 0)
+                {
+    
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

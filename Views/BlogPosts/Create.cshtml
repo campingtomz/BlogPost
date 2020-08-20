@@ -45,16 +45,15 @@
         @Html.Label("Categories", htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             <div>
-                @Html.ListBox("CategoryIds")
+                @Html.ListBox("CategoryIds",  null, new { @class = "form-control col-md-2" })
             </div>
-            @Html.ValidationMessageFor(model => model.Body, "", new { @class = "text-danger" })
         </div>
     </div>
        @* Image/file uploader *@
     <div class="form-group">
         @Html.LabelFor(model => model.MediaURL, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            <input name="image" type="file" class="form-control" />
+            <input name="image" type="file" class="form-control col-md-4" />
             @Html.ValidationMessageFor(model => model.MediaURL, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -71,7 +70,8 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Create" class="btn btn-success" />
+            @Html.ActionLink("Cancel", "Index", null, new { @type = "button", @class = "btn btn-danger" })
         </div>
     </div>
 </div>

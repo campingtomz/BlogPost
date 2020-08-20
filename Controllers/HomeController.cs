@@ -17,7 +17,7 @@ namespace blog.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            var allBlogPosts = db.BlogPosts.Where(b => b.Published).ToList();//Where(b=> b.Published).
+            var allBlogPosts = db.BlogPosts.Where(b => b.Published).Where(b => b.Published).ToList();//Where(b=> b.Published).
             return View(allBlogPosts);
         }
 

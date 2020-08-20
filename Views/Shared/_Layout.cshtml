@@ -14,10 +14,14 @@
     <link rel="stylesheet" href="~/Content/owl.theme.default.min.css">
     <link rel="stylesheet" href="~/Content/jquery.fancybox.min.css">
     <link rel="stylesheet" href="~/Content/aos.css">
+    <link href="~/Content/Icons/flaticon/font/flaticon.css" rel="stylesheet" />
+    <link href="~/Content/Icons/icomoon/style.css" rel="stylesheet" />
     <link href="~/Content/jquery.mb.YTPlayer.min.css" media="all" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="~/Content/style.css">
     <link href="~/Content/PagedList.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Content/bootstrap.min.css">
+    <link href="~/Content/Login/main.css" rel="stylesheet" />
+    <link href="~/Content/Login/util.css" rel="stylesheet" />
 
     <script src="https://kit.fontawesome.com/843a961c10.js" crossorigin="anonymous"></script>
 </head>
@@ -73,27 +77,27 @@
                                         @Html.ActionLink("Home", "Index", "Home")
                                     </li>
                                     <li>
-                                        <a href="categories.html" class="nav-link text-left">Categories</a>
+                                        @Html.ActionLink("Categories", "Index", "Categories")
+                                        @*<a href="categories.html" class="nav-link text-left">Categories</a>*@
                                     </li>
-                                    <li><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left">Portfolio</a></li>
+                                    <li><a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Portfolio</a></li>
                                     @*<li>
-                                        @Html.ActionLink("About", "About", "Home")
-                                    </li>*@
+                                            @Html.ActionLink("About", "About", "Home")
+                                        </li>*@
                                     <li>
                                         @Html.ActionLink("Contact", "Contact", "Home")
                                     </li>
                                     <li>
                                         @using (Html.BeginForm("Index", "BlogPosts", FormMethod.Get, new { @class = "form" }))
                                         {
-                                            <div class=" row controls controls-row search-row">
-                                                <div class="col">
-                                                    <input id="searchStr" name="searchStr" class="form-control" type="text" placeholder="Search....">
-                                                </div>
-                                                <button id="searchStr" name="searchStr" class="btn btn-secondary" type="submit">
-                                                    <i class="fas fa-search"></i>
-                                                </button>
-                                            </div>
-                                            }
+                            <div class=" row controls controls-row search-row">
+                                <div class="col">
+                                    <input id="searchStr" name="searchStr" class="form-control" type="text" placeholder="Search....">
+                                </div>
+                                <button id="searchStr" name="searchStr" class="btn btn-secondary" type="submit">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>}
                                     </li>
                                 </ul>
                             </nav>
@@ -148,9 +152,9 @@
     <script src="~/Scripts/jquery.fancybox.min.js"></script>
     <script src="~/Scripts/jquery.sticky.js"></script>
     <script src="~/Scripts/jquery.mb.YTPlayer.min.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
 
-
-
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
 
 
     <script src="~/Scripts/main.js"></script>

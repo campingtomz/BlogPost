@@ -13,11 +13,13 @@ using Microsoft.AspNet.Identity;
 namespace blog.Controllers
 {
     [RequireHttps]
+    [Authorize]
     public class CommentsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Comments
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Index()
         {
             return View(db.Comments.ToList());
@@ -72,7 +74,7 @@ namespace blog.Controllers
 
 
         // GET: Comments/Edit/5
-        [Authorize]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -92,11 +94,12 @@ namespace blog.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize]
-        public ActionResult Edit([Bind(Include = "Id,PostId,AuthorId,Body,Created,Update,UpdateReason")] Comment comment)
+        [Authorize(Roles = "Admin, Moderator")]
+        public ActionResult Edit([Bind(Include = "Id, PostId, AuthorId, Created,Body,UpdateReason")] Comment comment)
         {
             if (ModelState.IsValid)
             {
+                comment.Update = DateTime.Now;
                 db.Entry(comment).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -105,7 +108,7 @@ namespace blog.Controllers
         }
 
         // GET: Comments/Delete/5
-        [Authorize]
+        [Authorize(Roles = "Admin, Moderator")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

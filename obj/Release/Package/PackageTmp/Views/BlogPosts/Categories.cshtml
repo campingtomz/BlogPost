@@ -1,0 +1,29 @@
+﻿@model blog.ViewModels.BlogPostCategoriesVM
+@{
+    ViewBag.Title = "Categories";
+}
+
+<h2>Categories</h2>
+
+@foreach (var category in Model.Categories)
+{
+<h4>@category.Name</h4>
+    foreach (var blogpost in Model.BlogPosts.Where(b => b.Categories.Contains(category) == true))
+    {
+        <div class="col-md-6">
+            <div class="post-entry-1">
+                @if (blogpost.MediaURL != null)
+                {
+                    <a href="post-single.html"><img src="@blogpost.MediaURL" alt="Image" class="img-fluid"></a>
+
+                }
+                <a href=@Url.Action("Details", "BlogPosts", new { slug = blogpost.Slug })><h2>@blogpost.Title</h2></a>
+                <p>@blogpost.Abstract</p>
+                <div class="post-meta">
+                    <a href="https://tz-coderfoundry-portfolio.netlify.app/" class="nav-link text-left" target="_blank">Thomas Zanis</a>
+                    <span class="date-read">@blogpost.Created.ToString("MMM dd yyyy") </span>
+                </div>
+            </div>
+        </div>
+    }
+}
